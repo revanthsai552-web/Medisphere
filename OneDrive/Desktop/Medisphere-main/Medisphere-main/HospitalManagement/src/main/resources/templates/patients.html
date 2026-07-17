@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3 align-items-center">
+            <h2>Patient Roster</h2>
+            <a href="/dashboard" class="btn btn-secondary">← Back to Console</a>
+        </div>
+        <div class="card p-4 shadow-sm border-0 mb-4">
+            <h5>Register New Profile</h5>
+            <form th:action="@{/patients/add}" th:object="${newPatient}" method="post" class="row g-3">
+                <div class="col-md-3"><input type="text" th:field="*{name}" class="form-control" placeholder="Full Name" required></div>
+                <div class="col-md-3"><input type="email" th:field="*{email}" class="form-control" placeholder="Email Address" required></div>
+                <div class="col-md-3"><input type="text" th:field="*{phone}" class="form-control" placeholder="Phone Number" required></div>
+                <div class="col-md-3"><input type="text" th:field="*{illness}" class="form-control" placeholder="Primary Symptom / Illness" required></div>
+                <div class="col-12"><button type="submit" class="btn btn-primary">Save Profile</button></div>
+            </form>
+        </div>
+        <div class="card p-4 shadow-sm border-0">
+            <h5>Admitted Roster</h5>
+            <table class="table table-striped mt-2">
+                <thead>
+                    <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Illness</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="patient : ${patients}">
+                        <form th:action="@{/patients/update/{id}(id=${patient.id})}" method="post">
+                            <td th:text="${patient.id}"></td>
+                            <td><input type="text" name="name" th:value="${patient.name}" class="form-control form-control-sm"></td>
+                            <td><input type="email" name="email" th:value="${patient.email}" class="form-control form-control-sm"></td>
+                            <td><input type="text" name="phone" th:value="${patient.phone}" class="form-control form-control-sm"></td>
+                            <td><input type="text" name="illness" th:value="${patient.illness}" class="form-control form-control-sm"></td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-success">Update</button>
+                                <a th:href="@{/patients/delete/{id}(id=${patient.id})}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

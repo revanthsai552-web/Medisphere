@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3 align-items-center">
+            <h2>Medical Practitioner Roster</h2>
+            <a href="/dashboard" class="btn btn-secondary">← Back to Console</a>
+        </div>
+        <div class="card p-4 shadow-sm border-0 mb-4">
+            <h5>Onboard New Practitioner</h5>
+            <form th:action="@{/doctors/add}" th:object="${newDoctor}" method="post" class="row g-3">
+                <div class="col-md-4"><input type="text" th:field="*{name}" class="form-control" placeholder="Doctor Name" required></div>
+                <div class="col-md-4"><input type="email" th:field="*{email}" class="form-control" placeholder="Email Address" required></div>
+                <div class="col-md-4"><input type="text" th:field="*{specialization}" class="form-control" placeholder="Specialization (e.g. Cardiology)" required></div>
+                <div class="col-12"><button type="submit" class="btn btn-success">Register Profile</button></div>
+            </form>
+        </div>
+        <div class="card p-4 shadow-sm border-0">
+            <h5>Active Personnel</h5>
+            <table class="table table-striped mt-2">
+                <thead>
+                    <tr><th>ID</th><th>Name</th><th>Email</th><th>Specialization</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="doctor : ${doctors}">
+                        <form th:action="@{/doctors/update/{id}(id=${doctor.id})}" method="post">
+                            <td th:text="${doctor.id}"></td>
+                            <td><input type="text" name="name" th:value="${doctor.name}" class="form-control form-control-sm"></td>
+                            <td><input type="email" name="email" th:value="${doctor.email}" class="form-control form-control-sm"></td>
+                            <td><input type="text" name="specialization" th:value="${doctor.specialization}" class="form-control form-control-sm"></td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-success">Update</button>
+                                <a th:href="@{/doctors/delete/{id}(id=${doctor.id})}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

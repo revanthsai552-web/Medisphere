@@ -1,0 +1,34 @@
+# Target build directories
+target/
+!.mvn/wrapper/maven-wrapper.jar
+build/
+
+# In-Memory H2 Database files (if written to disk)
+*.mv.db
+*.trace.db
+
+# Log files
+*.log
+
+# Eclipse project files
+.metadata
+.classpath
+.project
+.settings/
+.springBeans
+.factorypath
+
+# IntelliJ IDEA project files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Visual Studio Code workspace configuration
+.vscode/
+*.code-workspace
+.history/
+
+# Operating system files
+Thumbs.db
+.DS_Store
